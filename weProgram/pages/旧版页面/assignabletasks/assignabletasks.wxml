@@ -1,0 +1,30 @@
+<!--pages/assignabletasks/assignabletasks.wxml-->
+<view wx:if="{{loadingCompleted}}">
+  <!-- 待分配任务列表 -->
+  <view class="weui-cells__title">待分配任务</view>
+  <view class="weui-cells weui-cells_after-title">
+    <navigator wx:for="{{tasks}}" url="../assign/assign?processId={{processId}}&processInstanceId={{item.processInstanceId}}&taskId={{item.taskId}}&taskName={{item.taskName}}" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+      <view>
+        <image class="circle" src="/images/title_picture.jpg" />
+      </view>
+      <view class="weui-cell__bd label">{{item.processInstanceName}}</view>
+      <view class="weui-cell__bd label">{{item.taskName}}</view>
+      <view class="weui-cell__ft weui-cell__ft_in-access"></view>
+    </navigator>
+  </view>
+  <view>{{(tasks == null || tasks.length == 0) ? "暂无需要分配的任务" : ""}}</view>
+  <!-- 已分配任务列表 -->
+  <view class="weui-cells__title">已分配任务</view>
+  <view class="weui-cells weui-cells_after-title">
+    <view wx:for="{{assignedTasks}}" class="weui-cell weui-cell_access" hover-class="weui-cell_active" data-index="{{index}}" bindtap="toCancelAssignPage">
+      <view>
+        <image class="circle" src="/images/title_picture.jpg" />
+      </view>
+      <view class="weui-cell__bd assigned-label">{{item.processInstanceName}}</view>
+      <view class="weui-cell__bd assigned-label">{{item.taskName}}</view>
+      <view class="weui-cell__bd assigned-label">{{item.assignee.alias}}</view>
+      <view class="weui-cell__ft weui-cell__ft_in-access"></view>
+    </view>
+  </view>
+  <view>{{(assignedTasks == null || assignedTasks.length == 0) ? "没有已分配的任务" : ""}}</view>
+</view>

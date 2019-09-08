@@ -1,0 +1,19 @@
+/* pages/Profile/Profile.wxss */
+
+/* 头像 */
+.userinfo-avatar {
+  width: 42px;
+  height: 42px;
+  margin-left: 10rpx;
+  margin-right: 30rpx;
+  border-radius: 50%;
+}
+/* 提交按钮 */
+.submitBtn{
+  width: 50%;
+  margin-top: 20rpx;
+  margin-bottom: 20rpx;
+}
+.cells{
+  margin-top: 10px;
+}

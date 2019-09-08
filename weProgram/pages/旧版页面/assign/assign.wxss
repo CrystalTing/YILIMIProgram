@@ -1,0 +1,15 @@
+/* pages/assign/assign.wxss */
+
+.label{
+  font-size: 13px;
+  color: black;
+  margin-right: 20rpx;
+  max-width: 220rpx;
+  word-wrap:break-word;
+  word-break: break-all;
+  display: inline-block;
+}
+/* 提交按钮 */
+.submit-button{
+  width: 50%;
+}

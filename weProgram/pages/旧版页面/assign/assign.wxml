@@ -1,0 +1,35 @@
+<!--pages/assign/assign.wxml-->
+<view wx:if='{{loadingCompleted}}'>
+  <form bindsubmit="submitAssignment">
+    <view class="weui-cells__title">可调配人员</view>
+    <view class="weui-cells weui-cells_after-title">
+      <view class="weui-cell weui-cell_select">
+        <view class="weui-cell__hd weui-cell__hd_in-select-after">
+          <view class="weui-label">姓名</view>
+        </view>
+        <view class="weui-cell__bd">
+          <picker bindchange="bindPickerChange" value="{{pickerIndex}}" range="{{assignableUsersStr}}">
+            <view class="weui-select weui-select_in-select-after">{{assignableUsers[pickerIndex].alias}}</view>
+          </picker>
+        </view>
+      </view>
+      <view class="weui-cell weui-cell_input">
+        <view class="weui-cell__hd">
+          <view class="weui-label">手机号码</view>
+        </view>
+        <view class="weui-cell__bd">
+          <input class="weui-input" style="color: #999;" value="{{assignableUsers[pickerIndex].phoneNumber}}" disabled="true"/>
+        </view>
+      </view>
+      <view class="weui-cell weui-cell_input">
+        <view class="weui-cell__hd">
+          <view class="weui-label">岗位</view>
+        </view>
+        <view class="weui-cell__bd">
+          <input class="weui-input" style="color: #999;" value="{{assignableUsers[pickerIndex].position}}" disabled="true"/>
+        </view>
+      </view>
+    </view>
+    <button form-type='submit' class='weui-btn submit-button' type="primary" disabled='{{hasSubmitted}}'>{{reassign?"重新分配":"分配任务"}}</button>
+  </form>
+</view>

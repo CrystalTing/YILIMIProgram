@@ -1,0 +1,44 @@
+<!--pages/workHistory/workHistory.wxml-->
+<block wx:if="{{loadingCompleted}}">
+  <view wx:if="{{workHistories.length != 0 && workHistories != null}}">
+    <view class="tabel-title">
+      <view class="tabel-title-text">项目名</view>
+      <view class="tabel-title-text">任务名</view>
+      <view class="tabel-title-date">日期</view>
+    </view>
+    <view class="weui-cells weui-cells_after-title" style="margin-top: 50rpx;">
+      <navigator wx:for="{{workHistories}}" class="weui-cell weui-cell_access" hover-class="weui-cell_active" data-index="{{index}}" url="../historydetails/historydetails?processId={{item.processId}}&processName={{item.processName}}&processInstanceId={{item.processInstanceId}}&processInstanceName={{item.processInstanceName}}&taskId={{item.taskId}}&taskName={{item.taskName}}&isChild=false&commitTime={{item.commitTime}}">
+        <view class="weui-cell__bd table-cell">{{item.processInstanceName}}</view>
+        <view class="weui-cell__bd table-cell">{{item.taskName}}</view>
+        <view class="weui-cell__ft weui-cell__ft_in-access table-cell-date">{{item.commitTime}}</view>
+      </navigator>
+    </view>
+    <view class='page-bar'>
+      <view class='page-text'>{{pageIndex}}/{{maxPageIndex}}页</view>
+      <view wx:if='{{pageIndex > 1}}' class='page-button' hover-class='page-button-hover' bindtap='toLastPage'>上一页</view>
+      <view wx:if='{{pageIndex < maxPageIndex}}' class='page-button' hover-class='page-button-hover' bindtap='toNextPage'>下一页</view>
+      <view wx:if='{{maxPageIndex > 1}}' class='page-button' hover-class='page-button-hover' bindtap='jumpPage'>跳转</view>
+    </view>
+  </view>
+  <!-- 页面加载失败提示 -->
+  <view wx:else class="weui-msg">
+    <view class="weui-msg__icon-area">
+      <icon type="warn" size="45"></icon>
+    </view>
+    <view class="weui-msg__text-area">
+      <view class="weui-msg__title">{{messageTitle}}</view>
+      <view class="weui-msg__desc">{{messageDetails}}</view>
+    </view>
+    <view wx:if="{{username != null && username.length != 0}}" class="weui-msg__opr-area">
+      <view class="weui-btn-area">
+        <button class="weui-btn" type="primary" bindtap="onShow">刷新页面</button>
+        <button class="weui-btn" type="default" bindtap="backToLastPage">返回</button>
+      </view>
+    </view>
+    <view wx:if="{{username == null || username.length == 0}}" class="weui-msg__extra-area">
+      <view class="weui-footer">
+        <view class="weui-footer__text">将自动跳转回登录页面</view>
+      </view>
+    </view>
+  </view>
+</block>

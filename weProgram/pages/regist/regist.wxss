@@ -1,0 +1,11 @@
+/* pages/regist.wxss */
+
+/* 提交按钮 */
+.submit-button{
+  width: 50%;
+  margin-top: 20px;
+}
+checkbox .wx-checkbox-input {/* checkbox 选项框大小 */
+  width: 15px;
+  height: 15px;
+}

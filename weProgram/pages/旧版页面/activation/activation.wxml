@@ -1,0 +1,6 @@
+<!--pages/activation/activation.wxml-->
+<form bindsubmit="activateProcessInstance">
+  <input class='detail-input' name="processInstanceName" placeholder="请输入实例名称"></input>
+  <view class='divLine'></view>
+  <button form-type="submit" class='activate-button' type='primary'>启动实例</button>
+</form>

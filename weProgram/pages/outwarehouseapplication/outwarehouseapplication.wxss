@@ -1,0 +1,44 @@
+/* pages/outwarehouseapplication/outwarehouseapplication.wxss */
+ /* 表格标题 */
+.tabel-title{
+  position: fixed;
+  display: flex;
+  justify-content: flex-start;
+  padding-left:35rpx;
+  padding-right:35rpx;
+  font-size:32rpx;
+  z-index: 500;
+  top: 0px;
+  background-color: #f8f8f8;
+}
+.tabel-title-text{
+  padding-left: 12rpx;
+  padding-right: 12rpx;
+  min-width: 460rpx;
+  color: black;
+}
+
+.delete-icon{ /* 删除按钮 */
+  position: relative;
+  top: -1px;
+  left: 10px;
+  z-index: 200;
+}
+
+.text-area{
+  padding: 10px 15px;
+}
+.label-wrap{
+  height: 100%;
+  min-height: 100%;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  line-height: 1.41176471;
+  word-wrap: break-word;
+  white-space: normal;
+}
+
+/* 提交按钮 */
+.submit-button{
+  width: 50%;
+}

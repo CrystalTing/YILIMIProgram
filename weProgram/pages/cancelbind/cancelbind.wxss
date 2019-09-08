@@ -1,0 +1,7 @@
+/* pages/cancelbind/cancelbind.wxss */
+
+/* 解绑按钮 */
+.cancelbind-button{
+  width: 50%;
+  margin-top: 20px;
+}

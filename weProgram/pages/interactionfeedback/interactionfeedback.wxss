@@ -1,0 +1,52 @@
+/* pages/interactionfeedback/interactionfeedback.wxss */
+
+/* 输入框 */
+.text-area{
+  padding: 10px 15px;
+}
+/* 剩余字数统计 */
+.textarea-counter{
+  margin-bottom: 0px;
+  padding-bottom: 0px;
+  font-size: 15px;
+}
+/* 必填标志 */
+.required-icon{
+  padding: 0px;
+  font-size: 20px;
+  background-color: #f8f8f8;
+  color: #e64340;
+}
+
+/* 图片控件 */
+.uploader__hd{  /* 上传框标题 */
+  padding-bottom: 5px;
+}
+.uploader__bd{  /* 上传框 */
+  padding-top: 5px;
+}
+.uploader__file{ /* 图片文件 */
+  position: relative;
+  margin-top: 6px;
+  margin-bottom: 6px;
+  margin-right: 12px;
+}
+.delete-icon{ /* 删除按钮 */
+  position: absolute;
+  top:-10px;
+  right:-10px;
+}
+.uploader-text{
+  margin: 20px 15px 0px;
+  color: #999;
+  font-size: 14px;
+}
+
+/* 提交按钮 */
+.submit-button{
+  width: 50%;
+  margin-top: 40rpx;
+  margin-bottom: 20rpx;
+  padding: 0rpx 00rpx;
+  font-size: 40rpx;
+}

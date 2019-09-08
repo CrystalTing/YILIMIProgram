@@ -1,0 +1,132 @@
+<!--pages/outwarehouseapplication/outwarehouseapplication.wxml-->
+<block wx:if="{{loadingCompleted}}">
+  <!-- 导航栏 -->
+  <view wx:if="{{userInfo != null && userInfo.length != 0 && loadingCargoError == false && notInstallerOrWarehouseman == false}}" class="weui-navbar navbar-fixed">
+    <view id="0" class="weui-navbar__item {{navbarIndex == 0 ? 'weui-bar__item_on' : ''}}" bindtap="navtabClick">
+      <view class="weui-navbar__title">出库申请</view>
+    </view>
+    <view id="1" class="weui-navbar__item {{navbarIndex == 1 ? 'weui-bar__item_on' : ''}}" bindtap="navtabClick">
+      <view class="weui-navbar__title">退库申请</view>
+    </view>
+    <view class="weui-navbar__slider" style="left: 80rpx; transform: translateX({{375 * navbarIndex}}rpx); -webkit-transform: translateX({{375 * navbarIndex}}rpx);"></view>
+  </view>
+  <form wx:if="{{userInfo != null && userInfo.length != 0 && loadingCargoError == false && ((loadingProcessInstancesError == false && navbarIndex == 0) || navbarIndex == 1) && notInstallerOrWarehouseman == false }}" bindsubmit="submitWarehouseRecords" class="weui-tab__panel">
+    <!-- <view class="tabel-title">
+      <view class="tabel-title-text">货物类型</view>
+      <view class="tabel-title-text">货物数量</view>
+    </view> -->
+    <view class="weui-cells weui-cells_after-title" style="margin-top: 50px;">
+      <!-- 出货列表 -->
+      <view wx:if="{{navbarIndex == 0}}" class="weui-cells weui-cells_after-title">
+        <view wx:for="{{outWareHouseRecords}}" wx:key="key" wx:for-index="index" class="weui-cell weui-cell_select">
+          <view class="weui-cell__hd">
+            <icon class="delete-icon" type="cancel" size="23" color="#E64340" bindtap="deleteRecord" data-index="{{index}}"></icon>
+          </view>
+          <view class="weui-cell__hd" style="width: 450rpx;">
+            <picker bindchange="bindCargoPickerChange" value="{{item.pickerIndex}}" range="{{cargoList.name}}" data-index="{{index}}">
+              <view class="weui-select label-wrap" style="color:{{illegalError[0] ? 'red' : 'black'}};">
+                {{cargoList.name[item.pickerIndex]}}</view>
+            </picker>
+          </view>
+          <view class="weui-cell__bd weui-cell__bd_in-select-before">
+            <input class="weui-input" type="number" placeholder="出库数量" value="{{item.num}}" bindinput="bindTextBoxInput" data-index="{{index}}" />
+          </view>
+          <view class="weui-cell__ft">
+            <icon wx:if="{{item.illegalError}}" type="warn" size="23" color="#E64340"></icon>
+          </view>
+        </view>
+        <!-- 添加记录 -->
+        <view class="weui-cell weui-cell_link" bindtap="addRecord">
+          <view class="weui-cell__bd">添加出库</view>
+        </view>
+        <!-- 选择出库项目 -->
+        <view class="weui-cell weui-cell_select">
+          <view class="weui-cell__hd weui-cell__hd_in-select-after">
+            <view class="weui-label label-wrap">使用项目
+              <view class="weui-badge required-icon">*</view>
+            </view>
+          </view>
+          <view class="weui-cell__bd">
+            <picker bindchange="bindProcessInstancePickerChange" value="processInstancePickerIndex" range="{{processInstances.processInstanceName}}">
+              <view class="weui-select weui-select_in-select-after">{{processInstances.processInstanceName[processInstancePickerIndex]}}</view>
+            </picker>
+          </view>
+        </view>
+        <!-- 备注 -->
+        <view class="weui-media-box weui-media-box_text text-area">
+          <view class="weui-media-box__title weui-media-box__title_in-text" style="word-wrap: break-word;">
+            <view class="weui-label">备注</view>
+          </view>
+          <view class="weui-media-box__desc">
+            <textarea class="weui-textarea" style="height: 4.3em; color: black;" placeholder="备注信息" value="{{outRemarks.content}}" bindinput='bindTextAreaInput' maxlength='200' />
+            <view class="weui-textarea-counter">{{outRemarks.count}}/200</view>
+          </view>
+        </view>
+      </view>
+      <!-- 退库列表 -->
+      <view wx:if="{{navbarIndex == 1}}" class="weui-cells weui-cells_after-title">
+        <view wx:for="{{inWareHouseRecords}}" wx:key="key" wx:for-index="index" class="weui-cell weui-cell_select">
+          <view class="weui-cell__hd">
+            <icon class="delete-icon" type="cancel" size="23" color="#E64340" bindtap="deleteRecord" data-index="{{index}}"></icon>
+          </view>
+          <view class="weui-cell__hd" style="width: 450rpx;">
+            <picker bindchange="bindCargoPickerChange" value="{{item.pickerIndex}}" range="{{cargoList.name}}" data-index="{{index}}">
+              <view class="weui-select label-wrap" style="color:{{illegalError[0] ? 'red' : 'black'}};">
+                {{cargoList.name[item.pickerIndex]}}</view>
+            </picker>
+          </view>
+          <view class="weui-cell__bd weui-cell__bd_in-select-before">
+            <input class="weui-input" type="number" placeholder="退库数量" value="{{item.num}}" bindinput="bindTextBoxInput" data-index="{{index}}" />
+          </view>
+          <view class="weui-cell__ft">
+            <icon wx:if="{{item.illegalError}}" type="warn" size="23" color="#E64340"></icon>
+          </view>
+        </view>
+        <!-- 添加记录 -->
+        <view class="weui-cell weui-cell_link" bindtap="addRecord">
+          <view class="weui-cell__bd">添加退库</view>
+        </view>
+        <!-- 备注 -->
+        <view class="weui-media-box weui-media-box_text text-area">
+          <view class="weui-media-box__title weui-media-box__title_in-text" style="word-wrap: break-word;">
+            <view class="weui-label">备注</view>
+          </view>
+          <view class="weui-media-box__desc">
+            <textarea class="weui-textarea" style="height: 4.3em; color: black;" placeholder="备注信息" value="{{inRemarks.content}}" bindinput='bindTextAreaInput' maxlength='200' />
+            <view class="weui-textarea-counter">{{inRemarks.count}}/200</view>
+          </view>
+        </view>
+      </view>
+    </view>
+    <!-- 提交按钮 -->
+    <button form-type='submit' type="primary" class='weui-btn submit-button' disabled='{{hasSubmitted}}'>提交</button>
+  </form>
+  <!-- 非安装员或库管员 -->
+  <view wx:elif="{{notInstallerOrWarehouseman == true}}" class="weui-msg">
+    <view class="weui-msg__text-area toast-center">
+      <!-- <view class="weui-msg__title">无项目实例</view> -->
+      <view class="weui-msg__desc">仅允许安装员或库管员申请出库</view>
+    </view>
+  </view>
+  <!-- 页面加载失败提示 -->
+  <view wx:else class="weui-msg">
+    <view class="weui-msg__icon-area">
+      <icon type="warn" size="45"></icon>
+    </view>
+    <view class="weui-msg__text-area">
+      <view class="weui-msg__title">{{messageTitle}}</view>
+      <view class="weui-msg__desc">{{messageDetails}}</view>
+    </view>
+    <view wx:if="{{username != null && username.length != 0}}" class="weui-msg__opr-area">
+      <view class="weui-btn-area">
+        <button class="weui-btn" type="primary" bindtap="requeseGetCargoList">刷新页面</button>
+        <button class="weui-btn" type="default" bindtap="logout">返回</button>
+      </view>
+    </view>
+    <view wx:if="{{username == null || username.length == 0}}" class="weui-msg__extra-area">
+      <view class="weui-footer">
+        <view class="weui-footer__text">将自动跳转回登录页面</view>
+      </view>
+    </view>
+  </view>
+</block>

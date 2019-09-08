@@ -1,0 +1,41 @@
+<!--pages/interactivefeedback/interactive.wxml-->
+<block wx:if="{{loadingCompleted}}">
+  <view wx:if='{{userInfo != null && userInfo.length != 0 && processes != null && processes.length != 0}}'>
+    <!-- 可参与项目列表 -->
+    <view class='weui-cells__title'>可互动的项目</view>
+    <view class='weui-grids grids'>
+      <navigator wx:for="{{processes}}" wx:key="processId" class='weui-grid' hover-class='weui-grid_active' url="../interactioninstance/interactioninstance?processId={{item.processId}}&processName={{item.processName}}">
+        <image class='weui-grid__icon circle' mode='scaleToFill' src='/images/process.png' plain='true'></image>
+        <text class='weui-grid__label' style='white-space: normal;'>{{item.processName}}</text>
+      </navigator>
+    </view>
+  </view>
+  <!-- 非售后人员 -->
+  <view wx:elif="{{notUpper}}" class="weui-msg">
+    <view class="weui-msg__text-area toast-center">
+      <view class="weui-msg__title">无项目</view>
+      <view class="weui-msg__desc">非售后人员无需与商家进行互动</view>
+    </view>
+  </view>
+  <!-- 页面加载失败提示 -->
+  <view wx:else class="weui-msg">
+    <view class="weui-msg__icon-area">
+      <icon type="warn" size="45"></icon>
+    </view>
+    <view class="weui-msg__text-area">
+      <view class="weui-msg__title">{{messageTitle}}</view>
+      <view class="weui-msg__desc">{{messageDetails}}</view>
+    </view>
+    <view wx:if="{{userInfo != null && userInfo.length != 0}}" class="weui-msg__opr-area">
+      <view class="weui-btn-area">
+        <button class="weui-btn" type="primary" bindtap="onShow">刷新页面</button>
+        <button class="weui-btn" type="default" bindtap="logout">返回登录页面</button>
+      </view>
+    </view>
+    <view wx:if="{{userInfo == null || userInfo.length == 0}}" class="weui-msg__extra-area">
+      <view class="weui-footer">
+        <view class="weui-footer__text">将自动跳转回登录页面</view>
+      </view>
+    </view>
+  </view>
+</block>

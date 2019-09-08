@@ -1,0 +1,63 @@
+/* pages/workHistory/workHistory.wxss */
+ /* 表格标题 */
+.tabel-title{
+  position: fixed;
+  display: flex;
+  justify-content: flex-start;
+  padding-left:35rpx;
+  padding-right:35rpx;
+  font-size:32rpx;
+  z-index: 500;
+  top: 0px;
+  background-color: #f8f8f8;
+}
+.tabel-title-text{
+  padding-left: 12rpx;
+  padding-right: 12rpx;
+  min-width: 240rpx;
+  color: black;
+}
+.tabel-title-date{
+  padding-left: 12rpx;
+  padding-right: 12rpx;
+  min-width: 140rpx;
+  color: black;
+}
+
+.table-cell{  /* 表格内的一栏 */
+  padding-left: 12rpx;
+  padding-right: 12rpx;
+  word-wrap:break-word;
+  color: black;
+  min-width: 240rpx;
+  font-size: 28rpx;
+}
+.table-cell-date{ /* 日期信息 */
+  padding-left: 12rpx;
+  color: black;
+  min-width: 140rpx;
+  font-size: 28rpx;
+}
+
+/* 底部页码 */
+.page-bar{
+  position: relative;
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 10px;
+  padding-left: 35rpx;
+  font-size:32rpx;
+}
+.page-text{
+  margin-top: 1px;
+  margin-right: 15rpx;
+}
+.page-button{
+  border: 1px solid #09BB07;
+  color: #09BB07;
+  padding: 0rpx 5rpx;
+  margin-right: 15rpx;
+}
+.page-button-hover{ 
+  opacity: 0.2;
+}

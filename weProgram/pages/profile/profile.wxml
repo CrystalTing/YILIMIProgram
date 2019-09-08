@@ -1,0 +1,73 @@
+<!--pages/Profile/Profile.wxml-->
+<view wx:if="userInfo != null && userInfo.length != 0">
+  <view class='weui-cells weui-cells_after-title'>
+    <view class='weui-cell'>
+      <label class='weui-cell__bd'>头像</label>
+      <image wx:if="{{userInfo!=null}}" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" id="{{userInfo.avatarUrl}}" mode="cover" bindtap='previewAvatar'><text>{userInfo.avatarUrl}</text></image>
+    </view>
+    <view class='weui-cell' hover-class='weui-cell_active'>
+      <label class='weui-cell__bd'>账号</label>
+      <label class='weui-cell__ft'>{{userInfo.username}}</label>
+    </view>
+    <view class='weui-cell' hover-class='weui-cell_active'>
+      <label class='weui-cell__bd'>角色</label>
+      <label class='weui-cell__ft'>{{userInfo.rolesStr}}</label>
+    </view>
+    <navigator class='weui-cell' hover-class='weui-cell_active' url='../detailsedit/detailsedit?formId=alias&formTitle=姓名&content={{userInfo.alias}}'>
+      <label class='weui-cell__bd'>姓名</label>
+      <label class='weui-cell__ft weui-cell__ft_in-access'>{{userInfo.alias}}</label>
+    </navigator>
+    <navigator class='weui-cell' hover-class='weui-cell_active' url='../detailsedit/detailsedit?formId=phoneNumber&formTitle=手机号码&content={{userInfo.phoneNumber}}'>
+      <label class='weui-cell__bd'>手机号码</label>
+      <label class='weui-cell__ft weui-cell__ft_in-access'>{{userInfo.phoneNumber}}</label>
+    </navigator>
+    <navigator class='weui-cell' hover-class='weui-cell_active' url='../detailsedit/detailsedit?formId=agent&formTitle=所属合伙人&content={{userInfo.agent.name}}'>
+      <label class='weui-cell__bd'>所属合伙人</label>
+      <label class='weui-cell__ft weui-cell__ft_in-access'>{{userInfo.agent.name}}</label>
+    </navigator>
+    <!-- <navigator class='weui-cell' hover-class='weui-cell_active' url='../detailsedit/detailsedit?formId=area&formTitle=所在区域&content={{userInfo.area.name}}'>
+      <label class='weui-cell__bd'>所在区域</label>
+      <label class='weui-cell__ft weui-cell__ft_in-access'>{{userInfo.area.name}}</label>
+    </navigator> -->
+  </view>
+  <view class='weui-cells cells'>
+    <navigator class='weui-cell' hover-class='weui-cell_active' url="../workhistories/workhistories">
+      <label class='weui-cell__bd'>个人工作记录</label>
+      <label class='weui-cell__ft weui-cell__ft_in-access'></label>
+    </navigator>
+  </view>
+  <view class='weui-cells cells'>
+    <navigator class='weui-cell' hover-class='weui-cell_active' url="../feedback/feedback">
+      <label class='weui-cell__bd'>问题反馈</label>
+      <label class='weui-cell__ft weui-cell__ft_in-access'></label>
+    </navigator>
+  </view>
+  <view class='weui-cells cells'>
+    <navigator wx:if="{{userInfo.bindWechat}}" class='weui-cell' hover-class='weui-cell_active' url="../cancelbind/cancelbind">
+      <label class='weui-cell__bd'>解绑微信</label>
+      <label class='weui-cell__ft weui-cell__ft_in-access'></label>
+    </navigator>
+    <navigator wx:else class='weui-cell' hover-class='weui-cell_active' url="../bindwechatinprofile/bindwechatinprofile">
+      <label class='weui-cell__bd'>绑定微信</label>
+      <label class='weui-cell__ft weui-cell__ft_in-access'></label>
+    </navigator>
+    <navigator wx:if="{{userInfo.username != 'admin'}}" class='weui-cell' hover-class='weui-cell_active' url="../updatepassword/updatepassword">
+      <label class='weui-cell__bd'>修改密码</label>
+      <label class='weui-cell__ft weui-cell__ft_in-access'></label>
+    </navigator>
+    <view class='weui-cell' hover-class='weui-cell_active' bindtap="{{hasLoggedout ? '' : 'logout'}}">
+      <label class='weui-cell__bd'>退出登录</label>
+      <label class='weui-cell__ft weui-cell__ft_in-access'></label>
+    </view>
+  </view>
+</view>
+<!-- 页面加载失败提示 -->
+<view wx:else class="weui-msg">
+  <view class="weui-msg__icon-area">
+    <icon type="warn" size="45"></icon>
+  </view>
+  <view class="weui-msg__text-area">
+    <view class="weui-msg__title">操作失败</view>
+    <view class="weui-msg__desc">找不到用户信息</view>
+  </view>
+</view>

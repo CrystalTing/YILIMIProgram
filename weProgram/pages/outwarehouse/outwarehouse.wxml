@@ -1,0 +1,41 @@
+<!--pages/outwarehouse/outwarehouse.wxml-->
+<block wx:if="{{loadingCompleted}}">
+  <view wx:if='{{userInfo != null && userInfo.length != 0 && processInstances != null && processInstances.length != 0}}'>
+    <!-- 正在运行的流程列表 -->
+    <view class='weui-cells__title'>正在运行的项目实例</view>
+    <view class='weui-grids grids'>
+      <navigator wx:for="{{processInstances}}" wx:key="processInstanceId" class='weui-grid' hover-class='weui-grid_active' url="../outwarehouseapplication/outwarehouseapplication?processInstanceId={{item.processInstanceId}}&processInstanceName={{item.processInstanceName}}">
+        <image class='weui-grid__icon circle' mode='scaleToFill' src='/images/processInstance.png' plain='true'></image>
+        <text class='weui-grid__label' style='white-space: normal;'>{{item.processInstanceName}}</text>
+      </navigator>
+    </view>
+  </view>
+  <!-- 安装员或库管员 -->
+  <view wx:elif="{{notInstallerOrWarehouseman}}" class="weui-msg">
+    <view class="weui-msg__text-area toast-center">
+      <view class="weui-msg__title">无项目实例</view>
+      <view class="weui-msg__desc">仅允许安装员或库管员申请出库</view>
+    </view>
+  </view>
+  <!-- 页面加载失败提示 -->
+  <view wx:else class="weui-msg">
+    <view class="weui-msg__icon-area">
+      <icon type="warn" size="45"></icon>
+    </view>
+    <view class="weui-msg__text-area">
+      <view class="weui-msg__title">{{messageTitle}}</view>
+      <view class="weui-msg__desc">{{messageDetails}}</view>
+    </view>
+    <view wx:if="{{userInfo != null && userInfo.length != 0}}" class="weui-msg__opr-area">
+      <view class="weui-btn-area">
+        <button class="weui-btn" type="primary" bindtap="onShow">刷新页面</button>
+        <button class="weui-btn" type="default" bindtap="logout">返回登录页面</button>
+      </view>
+    </view>
+    <view wx:if="{{userInfo == null || userInfo.length == 0}}" class="weui-msg__extra-area">
+      <view class="weui-footer">
+        <view class="weui-footer__text">将自动跳转回登录页面</view>
+      </view>
+    </view>
+  </view>
+</block>

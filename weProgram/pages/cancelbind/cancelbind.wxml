@@ -1,0 +1,23 @@
+<!--pages/cancelbind/cancelbind.wxml-->
+<form bindsubmit="cancelBindWechat">
+  <view class="weui-cells__title">账号</view>
+  <view class="weui-cells weui-cells_after-title">
+    <view class="weui-cell weui-cell_input">
+      <view class="weui-cell__bd">
+        <input class="weui-input" style="color: #b2b2b2;" name="username" value="{{userInfo.username}}" disabled="true"/>
+      </view>
+    </view>
+  </view>
+  <view class="weui-cells__title" style="color:{{illegalError ? 'red' : '#999'}};">输入密码</view>
+  <view class="weui-cells weui-cells_after-title">
+    <view class="weui-cell weui-cell_input">
+      <view class="weui-cell__bd">
+        <input class="weui-input" name="password" placeholder="填写本账号密码" password="true" bindinput="cancelIllegalError" />
+      </view>
+      <view wx:if="{{illegalError}}" class="weui-cell__ft">
+        <icon type="warn" size="23" color="#E64340"></icon>
+      </view>
+    </view>
+  </view>
+  <button class='cancelbind-button' form-type='submit' type='primary' disabled="{{hasSubmitted}}">解除绑定</button>
+</form>

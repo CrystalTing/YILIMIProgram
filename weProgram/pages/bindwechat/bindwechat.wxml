@@ -1,0 +1,31 @@
+<!--pages/bindwechat/bindwechat.wxml-->
+<form bindsubmit='bindWechat'>
+  <view class="weui-cells__title" style="color:{{illegalError[0] ? 'red' : '#999'}};">账号</view>
+  <view class="weui-cells weui-cells_after-title">
+    <view class="weui-cell weui-cell_input">
+      <view class="weui-cell__bd">
+        <input class="weui-input" name="username" id="0" placeholder="请输入账号" bindinput="cancelIllegalError" />
+      </view>
+      <view wx:if="{{illegalError[0]}}" class="weui-cell__ft">
+        <icon type="warn" size="23" color="#E64340"></icon>
+      </view>
+    </view>
+  </view>
+  <view class="weui-cells__title" style="color:{{illegalError[1] ? 'red' : '#999'}};">密码</view>
+  <view class="weui-cells weui-cells_after-title">
+    <view class="weui-cell weui-cell_input">
+      <view class="weui-cell__bd">
+        <input class="weui-input" name="password" id="1" placeholder="请输入密码" password="true" bindinput="cancelIllegalError" />
+      </view>
+      <view wx:if="{{illegalError[1]}}" class="weui-cell__ft">
+        <icon type="warn" size="23" color="#E64340"></icon>
+      </view>
+    </view>
+  </view>
+  <!-- <button class='regist-button' style='width: 60px;background-color:white;' hover-class='registBtn-hover' open-type='getUserInfo' bindgetuserinfo='getWechatInfo'>微信登录</button> -->
+  <view class="text-button">
+    <!-- <navigator class='regist-button' hover-class='registBtn-hover'>忘记密码</navigator> -->
+    <navigator class='regist-button' hover-class='registBtn-hover' url='../regist/regist'>没有账号？注册</navigator>
+  </view>
+  <button class='bind-button' form-type='submit' type='primary' disabled="{{hasSubmitted}}">绑定</button>
+</form>

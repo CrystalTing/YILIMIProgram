@@ -1,0 +1,177 @@
+/* pages/Text/Text.wxss */
+
+/* 提示信息垂直居中 */
+.toast-center{
+  margin-top: 180px;
+}
+/* 导航栏置顶 */
+.navbar-fixed{
+  position: fixed;
+  top: 0px;
+  background-color: #f8f8f8;
+}
+/* 一行信息 */
+.cell-wrap{
+  padding-top:10px;
+  display:block;
+}
+.label-wrap{
+  width: 100%;
+  white-space: normal;
+}
+.text-area{
+  padding: 10px 15px;
+}
+/* .checkBox-group{
+  margin-left: 20px;
+  margin-right: 10px;
+} */
+.checkBox{
+  margin: 0rpx 10px 5px 0rpx;
+  font-size: 12px;
+}
+checkbox .wx-checkbox-input {/* checkbox 选项框大小 */
+  width: 15px;
+  height: 15px;
+}
+radio .wx-radio-input{  /* radio选择框大小 */
+  width: 15px;
+  height: 15px;
+}
+.required-icon{  /* 必填标志 */
+  padding: 0px;
+  font-size: 20px;
+  background-color: white;
+  color: #e64340;
+}
+/* 图片控件 */
+.uploader__hd{  /* 上传框标题 */
+  padding-bottom: 5px;
+}
+.uploader__bd{  /* 上传框 */
+  padding-top: 5px;
+}
+.uploader__file{ /* 图片文件 */
+  position: relative;
+  margin-top: 6px;
+  margin-bottom: 6px;
+  margin-right: 12px;
+}
+.delete-icon{ /* 删除按钮 */
+  position: absolute;
+  top:-10px;
+  right:-10px;
+}
+.error-icon{  /* 合法性错误警告 */
+  display: inline-block;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+/* 提交按钮 */
+.submit-button{
+  width: 50%;
+}
+/* 打开电子文档按钮 */
+.open-button{
+  width: 75%;
+}
+
+
+/* 箭头 */
+.arrowdown{
+  margin-top: 5px;
+  width: 20px;
+  height: 20px;
+  position: relative;
+  left: 365rpx;
+}
+/* 并列任务 */
+.parallel{
+  padding-left: 10px;
+  padding-right: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+/* 已完成 */
+.COMPLETED{
+  /* width: 50%; */
+  background-color: gray;
+  font-size: 15px;
+}
+/* 正在进行 */
+.RUNNING{
+  /* width: 50%; */
+  background-color: green;
+  font-size: 15px;
+}
+/* 待完成 */
+.WAITING{
+  /* width: 50%; */
+  background-color: turquoise;
+  font-size: 15px;
+}
+.color-toast{  /* 颜色指示 */
+  margin-top: 20px;
+  display: flex;
+  justify-content: flex-end;
+}
+/* 颜色指示方块 */
+.color-icon{
+  margin-top: 5px;
+  width: 15px;
+  height: 15px;
+}
+.color-text{  /* 文字描述 */
+  margin-left: 5px;
+  margin-right: 10px;
+}
+
+
+/* 输入框 */
+.feedback_textarea{
+  margin: 20px 15px 0px;
+  position: relative;
+  border-bottom: 1px solid #09bb07;
+}
+/* 剩余字数统计 */
+.feedback_textarea-counter{
+  margin-bottom: 0px;
+  padding-bottom: 0px;
+  font-size: 15px;
+}
+/* 必填标志 */
+.feedback_required-icon{
+  padding: 0px;
+  font-size: 20px;
+  background-color: #f8f8f8;
+  color: #e64340;
+}
+/* 图片反馈文字 */
+.feedback_uploader-text{
+  margin: 20px 15px 0px;
+  color: #999;
+  font-size: 14px;
+}
+/* 提交反馈按钮 */
+.feedback_submit-button{
+  width: 50%;
+  margin-top: 40rpx;
+  margin-bottom: 20rpx;
+  padding: 0rpx 00rpx;
+  font-size: 40rpx;
+}
+
+/* 固定顶部 */
+  .top-fix{
+    position:fixed;
+    top:60rpx;
+    width: 100%;
+    margin-bottom:10rpx;
+    padding-top: 15rpx;
+    background-color: #f8f8f8;
+    height: 70rpx;
+    border-bottom: solid #f8f8f894 2rpx;
+  }
+
+  

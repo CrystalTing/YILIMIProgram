@@ -1,0 +1,54 @@
+<!--pages/interactionfeedback/interactionfeedback.wxml-->
+<form bindsubmit="submitInteraction">
+  <!-- 日期选择框 -->
+  <view class="weui-cells__title">互动日期
+    <view class="weui-badge required-icon">*</view>
+  </view>
+  <view class="weui-cells weui-cells_after-title">
+    <view class="weui-cell weui-cell_select">
+      <view class="weui-cell__bd">
+        <picker mode="multiSelector" name="date" value="{{date.dateIndex}}" range="{{date.dateArr}}" bindchange="bindDateChange" bindcolumnchange="bindDateColumnChange" bindcancel="bindDateCancel">
+          <view class="weui-select">{{date.dateArr[0][date.dateIndex[0]]}}-{{date.dateArr[1][date.dateIndex[1]]}}-{{date.dateArr[2][date.dateIndex[2]]}}</view>
+          <!-- <view class="weui-select">{{date.dateArr[0][date.dateIndex[0]]}}-{{date.dateArr[1][date.dateIndex[1]]}}-{{date.dateArr[2][date.dateIndex[2]]}} {{date.dateArr[3][date.dateIndex[3]]}}:{{date.dateArr[4][date.dateIndex[4]]}}:{{date.dateArr[5][date.dateIndex[5]]}}</view> -->
+        </picker>
+      </view>
+    </view>
+  </view>
+  <!-- 互动截图 -->
+  <view class="weui-uploader__hd uploader__hd">
+    <view class="weui-uploader__title uploader-text" style="color:{{interactionImages.illegalError ? 'red' : '#999'}};">互动截图
+      <view class="weui-badge required-icon">*</view>
+    </view>
+    <view class="weui-uploader__info uploader-text">{{interactionImages.imageUrls.length}}/9</view>
+  </view>
+  <view class='weui-cells weui-cells_after-title'>
+    <view class='weui-cell'>
+      <view class='weui-uploader' style="width:100%;">
+        <view class='weui-uploader__bd uploader__bd'>
+          <view class='weui-uploader__files'>
+            <block wx:for="{{interactionImages.imageUrls}}" wx:for-index='imageIndex' wx:key="*this">
+              <view class="weui-uploader__file uploader__file">
+                <icon class='delete-icon' bindtap='deleteImage' type="clear" size="20" color='red' data-imageindex="{{imageIndex}}" />
+                <image class="weui-uploader__img" src="{{item}}" mode="aspectFill" bindtap="previewImage" id="{{item}}" />
+              </view>
+            </block>
+          </view>
+          <view class="weui-uploader__input-box uploader__file">
+            <view class="weui-uploader__input" bindtap="chooseImages"></view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+  <!-- 备注 -->
+  <view class="weui-cells__title">备注</view>
+  <view class="weui-cells weui-cells_after-title">
+    <view class="weui-cell">
+      <view class="weui-cell__bd">
+        <textarea class="weui-textarea" name="content" placeholder="请输入" style="height: 4.3em" maxlength='200' bindinput="bindTextAreaInput" />
+        <view class="weui-textarea-counter textarea-counter">{{remarks.count}}/200</view>
+      </view>
+    </view>
+  </view>
+  <button class='submit-button' form-type="submit" type='primary' disabled="{{hasSubmitted}}">提交反馈</button>
+</form>

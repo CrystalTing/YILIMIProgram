@@ -1,0 +1,47 @@
+/**index.wxss**/
+.userinfo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* 顶部栏 */
+.text-bar{
+  display: flex;
+  flex-wrap: nowrap;
+  flex-direction: row;
+  justify-content: flex-end;
+  margin-top: 10px;
+}
+/* 头像 */
+.userinfo-avatar {
+  width: 47px;
+  height: 47px;
+  border-radius: 50%;
+}
+/* 竖分割线 */
+.divLine{
+  margin-left: 10rpx;
+  margin-right: 10rpx;
+  background: #E0E3DA;
+  height: 110rpx;
+  width: 5rpx;
+}
+
+/* 网格列表 */
+.grids{
+  margin-top: 10px;
+  display: flex;
+  flex-wrap: wrap;
+}
+/* 单个网格 */
+/* .grid{
+  padding: 10px 10px;
+} */
+/* 网格图片 */
+.circle{
+  width: 60px;
+  height: 60px;
+  /* border: 0 solid #ffffff; */
+  border-radius: 60px; 
+}

@@ -1,0 +1,29 @@
+/* pages/assignabletasks/assignabletasks.wxss */
+
+.weui-cell_access:before{
+  left: 120rpx;
+}
+/* 图片 */
+.circle{
+  margin-left: -5px;
+  margin-right: 10px;
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 50%; 
+}
+/* 文字 */
+.label{
+  max-width: 265rpx;
+  font-size: 13px;
+  margin-right: 20rpx;
+  word-wrap:break-word;
+  word-break: break-all;
+}
+/* 已分配列表文字 */
+.assigned-label{
+  max-width: 175rpx;
+  font-size: 13px;
+  margin-right: 20rpx;
+  word-wrap:break-word;
+  word-break: break-all;
+}

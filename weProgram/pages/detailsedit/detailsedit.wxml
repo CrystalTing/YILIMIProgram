@@ -1,0 +1,52 @@
+<!--pages/DetailsEdit/DetailsEdit.wxml-->
+<block wx:if="{{loadingCompleted}}">
+  <form wx:if="{{loadingAreaError == false && loadingAgentError == false}}" bindsubmit="updateUserInfo">
+    <view class="weui-cells">
+      <!-- 区域信息 -->
+      <view wx:if="{{formId == 'area'}}" class="weui-cell weui-cell_select">
+        <view class="weui-cell__bd">
+          <picker name="areaId" bindchange="bindAreaPickerChange" value="{{areas.index}}" range="{{areas.name}}">
+            <view class="weui-select">{{areas.name[areas.index]}}</view>
+          </picker>
+        </view>
+      </view>
+      <!-- 合伙人信息 -->
+      <view wx:elif="{{formId == 'agent'}}" class="weui-cell weui-cell_select">
+        <view class="weui-cell__bd">
+          <picker name="agentId" bindchange="bindAgentPickerChange" value="{{agents.index}}" range="{{agents.name}}">
+            <view class="weui-select">{{agents.name[agents.index]}}</view>
+          </picker>
+        </view>
+      </view>
+      <!-- 区域以外的信息 -->
+      <view wx:else class="weui-cell weui-cell_input">
+        <view class="weui-cell__bd">
+          <input class='weui-input' name="{{formId}}" value='{{content}}' type="{{formId == 'phoneNumber' ? 'number' : 'text'}}" placeholder='请输入{{formTitle}}'></input>
+        </view>
+      </view>
+    </view>
+    <!-- <view class='divLine'></view> -->
+    <button form-type="submit" class='confirm-button' type='primary' disabled="{{hasSubmitted}}">确认修改</button>
+  </form>
+  <!-- 页面加载失败提示 -->
+  <view wx:else class="weui-msg" style="margin-top: 50px;">
+    <view class="weui-msg__icon-area">
+      <icon type="warn" size="45"></icon>
+    </view>
+    <view class="weui-msg__text-area">
+      <view class="weui-msg__title">{{messageTitle}}</view>
+      <view class="weui-msg__desc">{{messageDetails}}</view>
+    </view>
+    <view wx:if="{{username != null && username.length != 0}}" class="weui-msg__opr-area">
+      <view class="weui-btn-area">
+        <button class="weui-btn" type="primary" bindtap="requestGetForm">刷新页面</button>
+        <button class="weui-btn" type="default" bindtap="backToLastPage">返回</button>
+      </view>
+    </view>
+    <view wx:if="{{username == null || username.length == 0}}" class="weui-msg__extra-area">
+      <view class="weui-footer">
+        <view class="weui-footer__text">将自动跳转回登录页面</view>
+      </view>
+    </view>
+  </view>
+</block>

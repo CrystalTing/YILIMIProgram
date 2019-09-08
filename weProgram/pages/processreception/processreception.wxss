@@ -1,0 +1,19 @@
+/* pages/processreception/processreception.wxss */
+
+/* 提示信息垂直居中 */
+.toast-center{
+  margin-top: 160px;
+}
+
+/* 网格列表 */
+.grids{
+  margin-top: 10px;
+  display: flex;
+  flex-wrap: wrap;
+}
+/* 网格图片 */
+.circle{
+  width: 60px;
+  height: 60px;
+  border-radius: 50%; 
+}

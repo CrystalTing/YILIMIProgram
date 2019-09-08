@@ -1,0 +1,14 @@
+/* pages/cancelassign/cancelassign.wxss */
+
+.label{
+  font-size: 13px;
+  color: #999;
+  margin-right: 20rpx;
+  max-width: 230rpx;
+  word-wrap:break-word;
+  word-break: break-all;
+}
+/* 提交按钮 */
+.submit-button{
+  width: 50%;
+}

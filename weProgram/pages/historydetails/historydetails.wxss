@@ -1,0 +1,47 @@
+/* pages/Text/Text.wxss */
+
+/* 一行信息 */
+.cell-wrap{
+  padding-top:10px;
+  display:block;
+}
+.label-wrap{
+  width: 100%;
+  white-space: normal;
+}
+.input-box{
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+.text-area{
+  padding: 10px 15px;
+}
+.checkBox-group{
+  margin-left: 0rpx;
+  margin-right: 20rpx;
+}
+.checkBox{
+  margin: 0rpx 20rpx 10rpx 0rpx;
+  font-size: 30rpx;
+}
+checkbox .wx-checkbox-input {/*checkbox 选项框大小  */
+  width: 35rpx;
+  height: 35rpx;
+}
+radio .wx-radio-input{  /* radio选择框大小 */
+  width: 15px;
+  height: 15px;
+}
+/* 图片控件 */
+.uploader__hd{  /* 上传框标题 */
+  padding-bottom: 5px;
+}
+.uploader__bd{  /* 上传框 */
+  padding-top: 5px;
+}
+.uploader__file{ /* 图片文件 */
+  position: relative;
+  margin-top: 6px;
+  margin-bottom: 6px;
+  margin-right: 12px;
+}

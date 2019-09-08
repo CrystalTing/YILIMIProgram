@@ -1,0 +1,14 @@
+/* pages/processinstances/processinstances.wxss */
+
+/* 网格列表 */
+.grids{
+  margin-top: 10px;
+  display: flex;
+  flex-wrap: wrap;
+}
+/* 网格图片 */
+.circle{
+  width: 60px;
+  height: 60px;
+  border-radius: 50%; 
+}

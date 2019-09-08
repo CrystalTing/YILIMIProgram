@@ -1,0 +1,13 @@
+/* pages/activatableprocesses/Activatableprocesses.wxss */
+
+/* 网格列表 */
+.grids{
+  margin-top: 10px;
+}
+/* 网格图片 */
+.circle{
+  width: 60px;
+  height: 60px;
+  /* border: 0 solid #ffffff; */
+  border-radius: 60px; 
+}

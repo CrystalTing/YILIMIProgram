@@ -1,0 +1,38 @@
+<!--pages/cancelassign/cancelassign.wxml-->
+<view>
+  <form bindsubmit="cancelAssign">
+    <view class="weui-cells__title">已分配人员信息</view>
+    <view class="weui-cells weui-cells_after-title">
+    <view class="weui-cell weui-cell_input">
+        <view class="weui-cell__hd">
+          <view class="weui-label">姓名</view>
+        </view>
+        <view class="weui-cell__bd">
+          <input class="weui-input" style="color: #999;" value="{{assignee.alias}}" disabled="true"/>
+        </view>
+      </view>
+      <view class="weui-cell weui-cell_input">
+        <view class="weui-cell__hd">
+          <view class="weui-label">手机号码</view>
+        </view>
+        <view class="weui-cell__bd">
+          <input class="weui-input" style="color: #999;" value="{{assignee.phoneNumber}}" disabled="true"/>
+        </view>
+      </view>
+      <view class="weui-cell weui-cell_input">
+        <view class="weui-cell__hd">
+          <view class="weui-label">岗位</view>
+        </view>
+        <view class="weui-cell__bd">
+          <input class="weui-input" style="color: #999;" value="{{assignee.position}}" disabled="true"/>
+        </view>
+      </view>
+      <!-- <view class="weui-cell">
+        <view class="weui-cell__bd label">{{assignee.alias}}</view>
+        <view class="weui-cell__bd label">{{assignee.phoneNumber}}</view>
+        <view class="weui-cell__ft label" style="margin-right:0rpx;">{{assignee.position}}</view>
+      </view> -->
+    </view>
+    <button form-type='submit' class='weui-btn submit-button' type="primary" disabled='{{hasSubmitted}}'>取消分配</button>
+  </form>
+</view>

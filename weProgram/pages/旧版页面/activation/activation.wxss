@@ -1,0 +1,29 @@
+/* pages/activation/activation.wxss */
+
+/* 横分割线 */
+.divLine{
+  margin-left: 5px;
+  background: #09bb07;
+  height: 1px;
+  width: 100%;
+}
+
+/* 输入框 */
+.detail-input{
+  margin-left: 20rpx;
+  margin-right: 20rpx;
+  margin-top: 50rpx;
+}
+.detail-input::after{
+  border-bottom-width: 5rpx;
+  border-bottom-color: gray;
+}
+
+/* 启动按钮 */
+.activate-button{
+  width: 50%;
+  margin-top: 40rpx;
+  margin-bottom: 20rpx;
+  padding: 0rpx 00rpx;
+  font-size: 40rpx;
+}

@@ -1,0 +1,295 @@
+<!--pages/Text/Text.wxml-->
+<view class="{{isChild ? '' : 'weui-tab'}}">
+  <!-- 导航栏 -->
+  <view wx:if="{{!isChild}}" class="weui-navbar navbar-fixed">
+    <view id="0" class="weui-navbar__item {{navbarIndex == 0 ? 'weui-bar__item_on' : ''}}" bindtap="navtabClick">
+      <view class="weui-navbar__title">表单</view>
+    </view>
+    <view id="1" class="weui-navbar__item {{navbarIndex == 1 ? 'weui-bar__item_on' : ''}}" bindtap="navtabClick">
+      <view class="weui-navbar__title">项目进度</view>
+    </view>
+    <view id="2" class="weui-navbar__item {{navbarIndex == 2 ? 'weui-bar__item_on' : ''}}" bindtap="navtabClick">
+      <view class="weui-navbar__title">项目反馈</view>
+    </view>
+    <view class="weui-navbar__slider" style="left: 13rpx; transform: translateX({{250 * navbarIndex}}rpx); -webkit-transform: translateX({{250 * navbarIndex}}rpx);"></view>
+  </view>
+  <!-- 内容 -->
+  <view wx:if="{{loadingFormError == false}}" class="{{isChild ? '' : 'weui-tab__panel '}}">
+    <!-- 表单 -->
+    <view wx:if="{{loadingCompleted}}" class="{{isChild ? '' : 'weui-tab__content'}}" hidden="{{navbarIndex != 0}}" style='width:100%;'>
+      <form wx:if="{{form != null && (form.length != 0 || taskId != 'start')}}" bindsubmit='submitForm'>
+        <view class="weui-cells weui-cells_after-title">
+          <!-- 显示表单 -->
+          <block wx:for='{{form}}' wx:key="propertyId">
+            <!-- 单行输入框 -->
+            <view wx:if='{{(form[index].type=="TEXT_BOX" || form[index].type==null) && form[index].showable != false}}' class="weui-cell weui-cell_input {{form[index].name.length > 14 ? 'cell-wrap':''}}">
+              <view class="weui-cell__hd">
+                <view class="weui-label {{form[index].name.length > 14 ? 'label-wrap':''}}" style="color:{{form[index].illegalError ? 'red' : 'black'}};">{{form[index].name}}
+                  <view wx:if="{{form[index].required}}" class="weui-badge required-icon">*</view>
+                </view>
+              </view>
+              <view class="weui-cell__bd" style='padding-top:0px;'>
+                <input class="weui-input" style="{{form[index].writeable?'':'color:#b2b2b2;'}}" name='{{form[index].propertyId}}' placeholder='请输入' value='{{form[index].defaultExpression}}' disabled='{{!form[index].writeable}}' data-index="{{index}}" bindinput="bindTextBoxInput"
+                />
+              </view>
+              <view wx:if="{{form[index].illegalError}}" class="weui-cell__ft">
+                <icon type="warn" size="20" color="#E64340"></icon>
+              </view>
+            </view>
+            <!-- 多行输入框 -->
+            <view wx:elif='{{form[index].type=="TEXT_AREA" && form[index].showable != false}}' class="weui-media-box weui-media-box_text text-area">
+              <view class="weui-media-box__title weui-media-box__title_in-text" style="word-wrap: break-word;">
+                <view class="weui-label" style="width:100%; white-space: normal; color:{{form[index].illegalError ? 'red' : 'black'}};">{{form[index].name}}
+                  <view wx:if="{{form[index].required}}" class="weui-badge required-icon">*</view>
+                  <icon wx:if="{{form[index].illegalError}}" style="padding-left: 10px;" type="warn" size="20" color="#E64340"></icon>
+                </view>
+              </view>
+              <view class="weui-media-box__desc">
+                <textarea class="weui-textarea" style="height: 4.3em; color:black; {{form[index].writeable?'':'color:#b2b2b2;'}}" placeholder="请输入文本" name='{{form[index].propertyId}}' value='{{form[index].defaultExpression}}' disabled='{{!form[index].writeable}}' data-index='{{index}}'
+                  bindinput='bindTextAreaInput' maxlength='200' />
+                <view wx:if="{{form[index].writeable}}" class="weui-textarea-counter">{{form[index].boxCache}}/200</view>
+              </view>
+            </view>
+            <!-- 单选框 -->
+            <view wx:elif='{{form[index].type=="RADIO_BOX" && form[index].showable != false}}' class="weui-cell {{form[index].name.length > 14 ? 'cell-wrap':''}}">
+              <view class="weui-cell__hd">
+                <view class="weui-label {{form[index].name.length > 14 ? 'label-wrap':''}}" style="color:{{form[index].illegalError ? 'red' : 'black'}};">{{form[index].name}}
+                  <view wx:if="{{form[index].required}}" class="weui-badge required-icon">*</view>
+                </view>
+              </view>
+              <view class="weui-cell__bd">
+                <radio-group name='{{form[index].propertyId}}' data-index="{{index}}" bindchange="bindRadioBoxChange">
+                  <radio wx:for='{{form[index].valueList}}' wx:key="*this" wx:for-index="radioIndex" class='checkBox' checked="{{form[index].boxCache[radioIndex]}}" value='{{item}}' disabled="{{!form[index].writeable}}">{{item}}</radio>
+                </radio-group>
+              </view>
+              <view wx:if="{{form[index].illegalError}}" class="weui-cell__ft">
+                <icon type="warn" size="20" color="#E64340"></icon>
+              </view>
+            </view>
+            <!-- 多选框 -->
+            <view wx:elif='{{form[index].type=="CHECK_BOX" && form[index].showable != false}}' class="weui-cell {{form[index].name.length > 14 ? 'cell-wrap':''}}">
+              <view class="weui-cell__hd">
+                <view class="weui-label {{form[index].name.length > 14 ? 'label-wrap':''}}" style="color:{{form[index].illegalError ? 'red' : 'black'}};">{{form[index].name}}
+                  <view wx:if="{{form[index].required}}" class="weui-badge required-icon">*</view>
+                </view>
+              </view>
+              <view class="weui-cell__bd">
+                <checkbox-group name='{{form[index].propertyId}}' data-index="{{index}}" bindchange="bindCheckBoxChange">
+                  <checkbox wx:for='{{form[index].valueList}}' wx:key="*this" wx:for-index="checkBoxIndex" class='checkBox' checked="{{form[index].boxCache[checkBoxIndex]}}" value='{{item}}' disabled="{{!form[index].writeable}}">{{item}}</checkbox>
+                </checkbox-group>
+              </view>
+              <view wx:if="{{form[index].illegalError}}" class="weui-cell__ft">
+                <icon type="warn" size="20" color="#E64340"></icon>
+              </view>
+            </view>
+            <!-- 上传图片 -->
+            <view class='weui-cell' wx:elif='{{form[index].type=="IMAGE" && form[index].showable != false}}'>
+              <view class='weui-uploader' style='width:100%;'>
+                <view class="weui-uploader__hd uploader__hd">
+                  <view class="weui-uploader__title" style="white-space: normal; color:{{form[index].illegalError ? 'red' : 'black'}};">{{form[index].name}}
+                    <view wx:if="{{form[index].required}}" class="weui-badge required-icon">*</view>
+                  </view>
+                  <icon wx:if="{{form[index].illegalError}}" style="padding-right: 10px;" type="warn" size="20" color="#E64340"></icon>
+                  <view wx:if="{{form[index].writeable}}" class="weui-uploader__info">{{form[index].boxCache.length}}/9</view>
+                </view>
+                <view class='weui-uploader__bd uploader__bd'>
+                  <view class='weui-uploader__files' id="uploaderFiles">
+                    <block wx:for="{{form[index].boxCache}}" wx:for-index='imageIndex' wx:key="*this">
+                      <view class="weui-uploader__file uploader__file">
+                        <icon wx:if="{{form[index].writeable}}" class='delete-icon' bindtap='deleteImage' type="clear" size="20" color='red' data-index="{{index}}" data-imageindex="{{imageIndex}}" />
+                        <image class="weui-uploader__img" src="{{item}}" mode="aspectFill" bindtap="previewImage" id="{{item}}" data-index='{{index}}' />
+                      </view>
+                    </block>
+                  </view>
+                  <view wx:if="{{form[index].writeable}}" class="weui-uploader__input-box uploader__file">
+                    <view class="weui-uploader__input" bindtap="chooseImages" data-index='{{index}}'></view>
+                  </view>
+                </view>
+              </view>
+            </view>
+            <!-- 下拉选择框 -->
+            <view wx:elif='{{form[index].type=="SELECT" && form[index].showable != false}}' class="weui-cell weui-cell_select {{form[index].name.length > 14 ? 'cell-wrap':''}}">
+              <view class="weui-cell__hd weui-cell__hd_in-select-after">
+                <view class="weui-label {{form[index].name.length > 14 ? 'label-wrap':''}}">{{form[index].name}}
+                  <view wx:if="{{form[index].required}}" class="weui-badge required-icon">*</view>
+                </view>
+              </view>
+              <view class="weui-cell__bd">
+                <picker name='{{form[index].propertyId}}' bindchange="bindPickerChange" disabled='{{!form[index].writeable}}' value="{{form[index].boxCache}}" range="{{form[index].valueList}}" data-index='{{index}}'>
+                  <view class="weui-select weui-select_in-select-after" style="{{form[index].writeable?'':'color:#b2b2b2;'}} {{form[index].name.length > 14 ? 'padding-left:15px;':''}}">{{form[index].valueList[form[index].boxCache]}}</view>
+                </picker>
+              </view>
+            </view>
+            <!-- 日期选择框 -->
+            <view wx:elif='{{form[index].type=="DATE" && form[index].showable != false}}' class="weui-cell weui-cell_select {{form[index].name.length > 14 ? 'cell-wrap':''}}">
+              <view class="weui-cell__hd weui-cell__hd_in-select-after">
+                <view class="weui-label {{form[index].name.length > 14 ? 'label-wrap':''}}">{{form[index].name}}
+                  <view wx:if="{{form[index].required}}" class="weui-badge required-icon">*</view>
+                </view>
+              </view>
+              <view class="weui-cell__bd">
+                <picker mode="multiSelector" name='{{form[index].propertyId}}' value="{{form[index].boxCache.dateIndex}}" range="{{form[index].boxCache.dateArr}}" disabled='{{!form[index].writeable}}' data-index='{{index}}' bindchange="bindDateChange" bindcolumnchange="bindDateColumnChange"
+                  bindcancel="bindDateCancel">
+                  <view class="weui-select weui-select_in-select-after" style="{{form[index].writeable?'':'color:#b2b2b2;'}} {{form[index].name.length > 14 ? 'padding-left:15px;':''}}">{{form[index].boxCache.dateArr[0][form[index].boxCache.dateIndex[0]]}}-{{form[index].boxCache.dateArr[1][form[index].boxCache.dateIndex[1]]}}-{{form[index].boxCache.dateArr[2][form[index].boxCache.dateIndex[2]]}}</view>
+                  <!-- <view class="weui-select weui-select_in-select-after" style="{{form[index].writeable?'':'color:#b2b2b2;'}} {{form[index].name.length > 14 ? 'padding-left:15px;':''}}">{{form[index].boxCache.dateArr[0][form[index].boxCache.dateIndex[0]]}}-{{form[index].boxCache.dateArr[1][form[index].boxCache.dateIndex[1]]}}-{{form[index].boxCache.dateArr[2][form[index].boxCache.dateIndex[2]]}} {{form[index].boxCache.dateArr[3][form[index].boxCache.dateIndex[3]]}}:{{form[index].boxCache.dateArr[4][form[index].boxCache.dateIndex[4]]}}:{{form[index].boxCache.dateArr[5][form[index].boxCache.dateIndex[5]]}}</view> -->
+                </picker>
+              </view>
+            </view>
+            <!-- 子表单 -->
+            <view wx:elif='{{form[index].type=="FORM" && form[index].showable != false}}' class="weui-cell weui-cell_access" hover-class='weui-cell_active' data-index="{{index}}" bindtap="toChildFormPage">
+              <view class="weui-cell__bd" style="white-space: normal; color:{{form[index].illegalError ? 'red' : 'black'}};">{{form[index].name}}</view>
+              <view class="weui-cell__ft weui-cell__ft_in-access">
+                <icon wx:if="{{form[index].illegalError}}" style="padding-right: 10px;" type="warn" size="20" color="#E64340"></icon>
+              </view>
+            </view>
+          </block>
+          <!-- 评价上一岗 -->
+          <view wx:if="{{taskId != 'start' && isChild != true}}" class="weui-cell">
+            <view class="weui-cell__hd">
+              <view class="weui-label" style="color:{{evaluation.illegalError ? 'red' : 'black'}};">评价上一岗
+                <view class="weui-badge required-icon">*</view>
+              </view>
+            </view>
+
+            <view class="weui-cell__bd">
+              <checkbox-group name='{{evaluationgroup}}' bindchange="bindCheckevaluationBoxChange">
+                <!-- <checkbox wx:for='{{form[index].valueList}}' wx:key="*this" wx:for-index="checkBoxIndex" class='checkBox' checked="{{form[index].boxCache[checkBoxIndex]}}" value='{{item}}' disabled="{{!form[index].writeable}}">{{item}}</checkbox> -->
+                <checkbox class='checkBox' checked="{{evaluation.content == 'GOOD'}}" value='GOOD' >好评 </checkbox>
+                <checkbox class='checkBox' checked="{{evaluation.content == 'NORMAL'}}" value='NORMAL'>一般 </checkbox>
+                <checkbox class='checkBox' checked="{{evaluation.content == 'BAD'}}" value='BAD'>差评</checkbox>
+            </checkbox-group>
+            </view>
+
+            <!-- <view class="weui-cell__bd">
+              <radio-group bindchange="bindEvaluationRadioChange">
+                <radio class='checkBox' checked="{{evaluation.content == 'GOOD'}}" value='GOOD'>好评</radio>
+                <radio class='checkBox' checked="{{evaluation.content == 'NORMAL'}}" value='NORMAL'>一般</radio>
+                <radio class='checkBox' checked="{{evaluation.content == 'BAD'}}" value='BAD'>差评</radio>
+              </radio-group>
+            </view> -->
+            <view wx:if="{{evaluation.illegalError}}" class="weui-cell__ft">
+              <icon type="warn" size="20" color="#E64340"></icon>
+            </view>
+          </view>
+          <!-- 差评理由 -->
+          <view wx:if="{{taskId != 'start' && isChild != true}}" class="weui-media-box weui-media-box_text text-area">
+            <view class="weui-media-box__title weui-media-box__title_in-text" style="word-wrap: break-word;">
+              <view class="weui-label" style="width:100%; white-space: normal; color:{{badReason.illegalError ? 'red' : 'black'}};">差评理由
+                <icon wx:if="{{badReason.illegalError}}" style="padding-left: 10px;" type="warn" size="20" color="#E64340"></icon>
+              </view>
+            </view>
+            <view class="weui-media-box__desc">
+              <textarea class="weui-textarea" style="height: 4.3em; color:black;" placeholder="请输入文本" bindinput='bindBadReasonTextAreaInput' maxlength='200' />
+              <view class="weui-textarea-counter">{{badReason.count}}/200</view>
+            </view>
+          </view>
+        </view>
+        <!-- 提交按钮 -->
+        <button wx:if="{{!(isChild && readOnly)}}" form-type='submit' class='weui-btn submit-button' disabled='{{hasSubmitted}}' id='save-button'>保存</button>
+        <button wx:if="{{!isChild}}" form-type='submit' class='weui-btn submit-button' type="primary" disabled='{{hasSubmitted}}' id='submit-button'>提交</button>
+        <button wx:if="{{isChild && (formId == 'useIntentionAgreementForm' || formId == 'formalAgreementForm')}}" class='weui-btn submit-button' type="primary" disabled='{{hasClickedDownloaded}}' id='download-button' bindtap="downloadElectronicContract">下载电子合同</button>
+        <button wx:if="{{isChild && (formId == 'useIntentionAgreementForm' || formId == 'formalAgreementForm')}}" class='weui-btn submit-button' type="primary" disabled='{{docxFilePath != null && docxFilePath.length != 0 && hasClickedOpen == true}}' id='open-button'
+          bindtap="openElectronicContract">打开电子合同</button>
+        <!-- <button wx:if="{{!isChild && taskId != 'start'}}" class='weui-btn submit-button' type="warn" disabled='{{hasSubmitted}}' id='refuse-button' bindtap="refuseTask">驳回</button> -->
+      </form>
+      <!-- 未轮到用户处理任务 -->
+      <view wx:elif="{{form == null}}" class="weui-msg">
+        <view class="weui-msg__text-area toast-center">
+          <view class="weui-msg__title">无表单内容</view>
+          <view class="weui-msg__desc">当前任务环节不需要你处理</view>
+        </view>
+      </view>
+      <!-- 空表单 -->
+      <form wx:else class="weui-msg" bindsubmit='submitForm'>
+        <view class="weui-msg__text-area toast-center">
+          <view class="weui-msg__title">无需要填写的内容</view>
+          <view class="weui-msg__desc">该表单不需要填写任何信息，请点击“直接提交”按钮</view>
+        </view>
+        <view class="weui-msg__opr-area">
+          <view class="weui-btn-area">
+            <button class="weui-btn submitBtn" form-type='submit' type="primary" disabled='{{hasSubmitted}}' id="{{isChild ? 'save-button' : 'submit-button'}}">直接提交</button>
+          </view>
+        </view>
+      </form>
+    </view>
+    <!-- 项目进度 -->
+    <view wx:if="{{loadingCompleted}}" class="{{isChild ? '' : 'weui-tab__content'}}" hidden="{{navbarIndex != 1}}" style="margin-top:40px;">
+      <block wx:for="{{taskSequence}}" wx:for-index="taskSequenceIndex">
+        <image wx:if="{{taskSequenceIndex != 0}}" class="arrowdown" src="/images/arrowdown.png"></image>
+        <view class="parallel">
+          <button wx:for="{{taskSequence[taskSequenceIndex]}}" class="{{tasks[item].status}}" hover-class="none" style="width: {{(80 / taskSequence[taskSequenceIndex].length)}}%">{{tasks[item].taskName}}</button>
+        </view>
+      </block>
+      <view wx:if="{{tasks.length != 0}}" class="color-toast top-fix">
+        <view class="color-icon" style="background-color: gray"></view>
+        <view class="color-text">已完成</view>
+        <view class="color-icon" style="background-color: green"></view>
+        <view class="color-text">正在进行</view>
+        <view class="color-icon" style="background-color: turquoise"></view>
+        <view class="color-text">未完成</view>
+      </view>
+    </view>
+    <!-- 项目反馈 -->
+    <view wx:if="{{loadingCompleted}}" class="{{isChild ? '' : 'weui-tab__content'}}" hidden="{{navbarIndex != 2}}">
+      <form bindsubmit="submitFeedback">
+        <view class="weui-cells__title">问题与反馈
+          <view class="weui-badge feedback_required-icon">*</view>
+        </view>
+        <view class="weui-cells weui-cells_after-title">
+          <view class="weui-cell">
+            <view class="weui-cell__bd">
+              <textarea class="weui-textarea" name="feedback" placeholder="请输入" style="height: 4.3em" maxlength='200' bindinput="bindTextAreaInput" />
+              <view class="weui-textarea-counter feedback_textarea-counter">{{count}}/200</view>
+            </view>
+          </view>
+        </view>
+        <!-- 图片描述 -->
+        <view class="weui-uploader__hd uploader__hd">
+          <view class="weui-uploader__title feedback_uploader-text">图片描述</view>
+          <view class="weui-uploader__info feedback_uploader-text">{{feedbackImages.length}}/9</view>
+        </view>
+        <view class='weui-cells weui-cells_after-title'>
+          <view class='weui-cell'>
+            <view class='weui-uploader' style='width:100%;'>
+              <view class='weui-uploader__bd uploader__bd'>
+                <view class='weui-uploader__files' id="uploaderFiles">
+                  <block wx:for="{{feedbackImages}}" wx:for-index='imageIndex' wx:key="*this">
+                    <view class="weui-uploader__file uploader__file">
+                      <icon class='delete-icon' bindtap='deleteImage' type="clear" size="20" color='red' data-imageindex="{{imageIndex}}" />
+                      <image class="weui-uploader__img" src="{{item}}" mode="aspectFill" bindtap="previewImage" id="{{item}}" />
+                    </view>
+                  </block>
+                </view>
+                <view class="weui-uploader__input-box uploader__file">
+                  <view class="weui-uploader__input" bindtap="chooseImages"></view>
+                </view>
+              </view>
+            </view>
+          </view>
+        </view>
+        <button class='feedback_submit-button' form-type="submit" type='primary' disabled="{{feedbackHasSubmitted}}">提交反馈</button>
+      </form>
+    </view>
+  </view>
+  <!-- 页面加载失败提示 -->
+  <view wx:else class="weui-msg" style="margin-top: 50px;">
+    <view class="weui-msg__icon-area">
+      <icon type="warn" size="45"></icon>
+    </view>
+    <view class="weui-msg__text-area">
+      <view class="weui-msg__title">{{messageTitle}}</view>
+      <view class="weui-msg__desc">{{messageDetails}}</view>
+    </view>
+    <view wx:if="{{username != null && username.length != 0}}" class="weui-msg__opr-area">
+      <view class="weui-btn-area">
+        <button class="weui-btn" type="primary" bindtap="requestGetForm">刷新页面</button>
+        <button class="weui-btn" type="default" bindtap="backToLastPage">返回</button>
+      </view>
+    </view>
+    <view wx:if="{{username == null || username.length == 0}}" class="weui-msg__extra-area">
+      <view class="weui-footer">
+        <view class="weui-footer__text">将自动跳转回登录页面</view>
+      </view>
+    </view>
+  </view>
+</view>

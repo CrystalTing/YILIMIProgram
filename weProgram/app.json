@@ -1,0 +1,73 @@
+{
+  "pages": [
+    "pages/homepage/homepage",
+    "pages/login/login",
+    "pages/logs/logs",
+    "pages/regist/regist",
+    "pages/form/form",
+    "pages/profile/profile",
+    "pages/detailsedit/detailsedit",
+    "pages/workhistories/workhistories",
+    "pages/historydetails/historydetails",
+    "pages/processinstances/processinstances",
+    "pages/feedback/feedback",
+    "pages/bindwechat/bindwechat",
+    "pages/updatepassword/updatepassword",
+    "pages/cancelbind/cancelbind",
+    "pages/bindwechatinprofile/bindwechatinprofile",
+    "pages/interaction/interaction",
+    "pages/interactioninstance/interactioninstance",
+    "pages/interactionfeedback/interactionfeedback",
+    "pages/warehouseapplication/warehouseapplication",
+    "pages/processreception/processreception",
+    "pages/receivedtasks/receivedtasks"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#f8f8f8",
+    "backgroundColor": "#f8f8f8",
+    "navigationBarTitleText": "流程管理",
+    "navigationBarTextStyle": "black"
+  },
+  "tabBar": {
+    "borderStyle": "black",
+    "backgroundColor": "#ffffff",
+    "list": [
+      {
+        "pagePath": "pages/homepage/homepage",
+        "text": "流程参与",
+        "iconPath": "images/homepage/process.png",
+        "selectedIconPath": "images/homepage/process_active.png"
+      },
+      {
+        "pagePath": "pages/processreception/processreception",
+        "text": "任务接收",
+        "iconPath": "images/homepage/reception.png",
+        "selectedIconPath": "images/homepage/reception_active.png"
+      },
+      {
+        "pagePath": "pages/interaction/interaction",
+        "text": "售后互动",
+        "iconPath": "images/homepage/interaction.png",
+        "selectedIconPath": "images/homepage/interaction_active.png"
+      },
+      {
+        "pagePath": "pages/warehouseapplication/warehouseapplication",
+        "text": "库存管理",
+        "iconPath": "images/homepage/outwarehouse.png",
+        "selectedIconPath": "images/homepage/outwarehouse_active.png"
+      },
+      {
+        "pagePath": "pages/profile/profile",
+        "text": "我",
+        "iconPath": "images/homepage/user.png",
+        "selectedIconPath": "images/homepage/user_active.png"
+      }
+    ]
+  },
+  "sitemapLocation": "sitemap.json",
+  "networkTimeout": {
+    "request": 10000,
+    "uploadFile": 10000
+  }
+}

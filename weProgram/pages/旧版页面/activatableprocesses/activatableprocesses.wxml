@@ -1,0 +1,10 @@
+<!--pages/activatableprocesses/Activatableprocesses.wxml-->
+<view>
+  <!-- 按钮列表 -->
+  <view wx:if="{{loadingCompleted}}" class='weui-grids grids'>
+    <navigator wx:for="{{activatableProcesses}}" class='weui-grid' hover-class='weui-grid_active' url="../activation/activation?processId={{item.processId}}&processName={{item.processName}}">
+      <image class='weui-grid__icon circle' mode='scaleToFill' src='/images/title_picture.jpg' plain='true'></image>
+      <text class='weui-grid__label' style='white-space: normal;'>{{item.processName}}</text>
+    </navigator>
+  </view>
+</view>

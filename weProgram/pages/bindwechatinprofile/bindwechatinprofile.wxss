@@ -1,0 +1,7 @@
+/* pages/bindwechatinprofile/bindwechatinprofile.wxss */
+
+/* 绑定按钮 */
+.bind-button{
+  width: 50%;
+  margin-top: 20px;
+}

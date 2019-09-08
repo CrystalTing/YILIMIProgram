@@ -1,0 +1,115 @@
+<!--pages/regist.wxml-->
+<view wx:if="{{loadingCompleted}}">
+  <form wx:if="{{loadingAreaError == false && loadingAgentError == false}}" bindsubmit='regist'>
+    <view class='weui-cells weui-cells_after-title'>
+      <view class='weui-cell weui-cell_input'>
+        <view class="weui-cell__hd">
+          <view class='weui-label' style="color:{{illegalError[0] ? 'red' : 'black'}};">账号</view>
+        </view>
+        <view class="weui-cell__bd">
+          <input class="weui-input" name="username" id="0" placeholder='请输入账号' bindinput="cancelIllegalError" />
+        </view>
+        <view class="weui-cell__ft">
+          <icon wx:if="{{illegalError[0]}}" type="warn" size="23" color="#E64340"></icon>
+        </view>
+      </view>
+      <view class='weui-cell weui-cell_input'>
+        <view class="weui-cell__hd">
+          <view class='weui-label' style="color:{{illegalError[1] ? 'red' : 'black'}};">密码</view>
+        </view>
+        <view class="weui-cell__bd">
+          <input class="weui-input" name="password" id="1" password='true' placeholder='请输入密码' bindinput="cancelIllegalError" />
+        </view>
+        <view class="weui-cell__ft">
+          <icon wx:if="{{illegalError[1]}}" type="warn" size="23" color="#E64340"></icon>
+        </view>
+      </view>
+      <view class='weui-cell weui-cell_input'>
+        <view class="weui-cell__hd">
+          <view class='weui-label' style="color:{{illegalError[2] ? 'red' : 'black'}};">确认密码</view>
+        </view>
+        <view class="weui-cell__bd">
+          <input class="weui-input" name="confirmPassword" id="2" password='true' placeholder='重新输入密码' bindinput="cancelIllegalError" />
+        </view>
+        <view class="weui-cell__ft">
+          <icon wx:if="{{illegalError[2]}}" type="warn" size="23" color="#E64340"></icon>
+        </view>
+      </view>
+      <view class='weui-cell weui-cell_input'>
+        <view class="weui-cell__hd">
+          <view class='weui-label' style="color:{{illegalError[3] ? 'red' : 'black'}};">姓名</view>
+        </view>
+        <view class="weui-cell__bd">
+          <input class="weui-input" name="alias" id="3" placeholder='请输入姓名' bindinput="cancelIllegalError" />
+        </view>
+        <view class="weui-cell__ft">
+          <icon wx:if="{{illegalError[3]}}" type="warn" size="23" color="#E64340"></icon>
+        </view>
+      </view>
+      <view class='weui-cell weui-cell_input'>
+        <view class="weui-cell__hd">
+          <view class='weui-label' style="color:{{illegalError[4] ? 'red' : 'black'}};">电话号码</view>
+        </view>
+        <view class="weui-cell__bd">
+          <input class="weui-input" type='number' name="phoneNumber" id="4" placeholder='请输入电话号码' bindinput="cancelIllegalError" />
+        </view>
+        <view class="weui-cell__ft">
+          <icon wx:if="{{illegalError[4]}}" type="warn" size="23" color="#E64340"></icon>
+        </view>
+      </view>
+      <!-- 合伙人 -->
+      <view class="weui-cell weui-cell_select">
+        <view class="weui-cell__hd weui-cell__hd_in-select-after">
+          <view class="weui-label">所属合伙人</view>
+        </view>
+        <view class="weui-cell__bd">
+          <picker name="agentId" bindchange="bindAgentPickerChange" id="5" value="{{agents.index}}" range="{{agents.name}}">
+            <view class="weui-select weui-select_in-select-after">{{agents.name[agents.index]}}</view>
+          </picker>
+        </view>
+      </view>
+      <!-- 区域 -->
+      <!-- <view class="weui-cell weui-cell_select">
+        <view class="weui-cell__hd weui-cell__hd_in-select-after">
+          <view class="weui-label">所在区域</view>
+        </view>
+        <view class="weui-cell__bd">
+          <picker name="areaId" bindchange="bindAreaPickerChange" id="6" value="{{areas.index}}" range="{{areas.name}}">
+            <view class="weui-select weui-select_in-select-after">{{areas.name[areas.index]}}</view>
+          </picker>
+        </view>
+      </view> -->
+    </view>
+    <checkbox-group name="bindWechat">
+      <view class="weui-agree">
+        <view class="weui-agree__text">
+          <checkbox value="绑定微信" checked="true">
+            绑定微信
+          </checkbox>
+        </view>
+      </view>
+    </checkbox-group>
+    <button class='submit-button' form-type='submit' type="primary" disabled="{{hasSubmitted}}">提交</button>
+  </form>
+  <!-- 页面加载失败提示 -->
+  <view wx:else class="weui-msg" style="margin-top: 50px;">
+    <view class="weui-msg__icon-area">
+      <icon type="warn" size="45"></icon>
+    </view>
+    <view class="weui-msg__text-area">
+      <view class="weui-msg__title">{{messageTitle}}</view>
+      <view class="weui-msg__desc">{{messageDetails}}</view>
+    </view>
+    <view wx:if="{{username != null && username.length != 0}}" class="weui-msg__opr-area">
+      <view class="weui-btn-area">
+        <button class="weui-btn" type="primary" bindtap="onLoad">刷新页面</button>
+        <button class="weui-btn" type="default" bindtap="backToLastPage">返回</button>
+      </view>
+    </view>
+    <view wx:if="{{username == null || username.length == 0}}" class="weui-msg__extra-area">
+      <view class="weui-footer">
+        <view class="weui-footer__text">将自动跳转回登录页面</view>
+      </view>
+    </view>
+  </view>
+</view>

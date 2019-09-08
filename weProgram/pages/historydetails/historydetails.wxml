@@ -1,0 +1,123 @@
+<!--pages/historydetails/historydetails.wxml-->
+<block wx:if="{{loadingCompleted}}">
+  <view wx:if="{{loadingFormError == false}}">
+    <view class='weui-cells__title'>
+      <view>项目名称：{{processName}}</view>
+      <view>实例名称：{{processInstanceName}}</view>
+      <view>任务名称：{{taskName}}</view>
+      <view wx:if="{{commitTime != null}}">操作时间：{{commitTime}}</view>
+      <!-- <view>操作人：</view> -->
+    </view>
+    <view class="weui-cells weui-cells_after-title">
+      <!-- 显示表单 -->
+      <block wx:for='{{form}}'>
+        <!-- 单行输入框 -->
+        <view wx:if='{{(form[index].type=="TEXT_BOX" || form[index].type==null) && form[index].showable != false}}' class="weui-cell weui-cell_input input-box {{form[index].name.length > 14 ? 'cell-wrap':''}}">
+          <view class="weui-cell__hd {{form[index].name.length > 14 ? 'label-wrap':''}}">
+            <view class="weui-label">{{form[index].name}}</view>
+          </view>
+          <view class="weui-cell__bd">
+            <input class="weui-input" style="color:#b2b2b2;" class='inputBox' value='{{form[index].value}}' disabled='false'/>
+          </view>
+        </view>
+        <!-- 多行输入框 -->
+        <view wx:elif='{{form[index].type=="TEXT_AREA" && form[index].showable != false}}' class="weui-media-box weui-media-box_text text-area">
+          <view class="weui-media-box__title weui-media-box__title_in-text">
+            <view class="weui-label" style="width:100%; white-space: normal;">{{form[index].name}}</view>
+          </view>
+          <view class="weui-media-box__desc">
+            <textarea class="weui-textarea" style="height: 4.3em;" value='{{form[index].value}}' disabled='false'/>
+          </view>
+        </view>
+        <!-- 单选框 -->
+        <view wx:elif='{{form[index].type=="RADIO_BOX" && form[index].showable != false}}' class="weui-cell {{form[index].name.length > 14 ? 'cell-wrap':''}}">
+          <view class="weui-cell__hd">
+            <view class="weui-label {{form[index].name.length > 14 ? 'label-wrap':''}}">{{form[index].name}}</view>
+          </view>
+          <view class="weui-cell__bd">
+            <radio-group>
+              <radio wx:for='{{form[index].valueList}}' wx:key="*this" wx:for-index="radioIndex" class='checkBox' checked="{{form[index].boxCache[radioIndex]}}" value='{{item}}' disabled='false'>{{item}}</radio>
+            </radio-group>
+          </view>
+        </view>
+        <!-- 勾选框 -->
+        <view wx:elif='{{form[index].type=="CHECK_BOX" && form[index].showable != false}}' class="weui-cell {{form[index].name.length > 14 ? 'cell-wrap':''}}">
+          <view class="weui-cell__hd">
+            <view class="weui-label {{form[index].name.length > 14 ? 'label-wrap':''}}">{{form[index].name}}</view>
+          </view>
+          <view class="weui-cell__bd">
+            <checkbox-group>
+              <checkbox wx:for='{{form[index].valueList}}' wx:key="*this" wx:for-index="checkBoxIndex" class='checkBox' checked="{{form[index].boxCache[checkBoxIndex]}}" value='{{item}}' disabled='false'>{{item}}</checkbox>
+            </checkbox-group>
+          </view>
+        </view>
+        <!-- 图片 -->
+        <view class='weui-cell' wx:elif='{{form[index].type=="IMAGE" && form[index].showable != false}}'>
+          <view class='weui-uploader' style='width:100%;'>
+            <view class="weui-uploader__hd uploader__hd">
+              <view class="weui-uploader__title" style="white-space: normal;">{{form[index].name}}</view>
+            </view>
+            <view class='weui-uploader__bd uploader__bd'>
+              <view class='weui-uploader__files' id="uploaderFiles">
+                <block wx:for="{{form[index].value}}" wx:for-index='imageIndex' wx:key="*this">
+                  <view class="weui-uploader__file uploader__file">
+                    <image class="weui-uploader__img" src="{{item}}" mode="aspectFill" id="{{item}}" data-index='{{index}}' bindtap="previewImage"/>
+                  </view>
+                </block>
+              </view>
+            </view>
+          </view>
+        </view>
+        <!-- 下拉选择框 -->
+        <view wx:elif='{{form[index].type=="SELECT" && form[index].showable != false}}' class="weui-cell weui-cell_select {{form[index].name.length > 14 ? 'cell-wrap':''}}">
+          <view class="weui-cell__hd weui-cell__hd_in-select-after">
+            <view class="weui-label {{form[index].name.length > 14 ? 'label-wrap':''}}">{{form[index].name}}</view>
+          </view>
+          <view class="weui-cell__bd">
+            <picker disabled='false' value="{{form[index].value}}">
+              <view class="weui-cell" style="color: #b2b2b2; {{form[index].name.length > 14 ? 'padding-left:15px;':''}}">{{form[index].value}}</view>
+            </picker>
+          </view>
+        </view>
+        <!-- 日期选择框 -->
+        <view wx:elif='{{form[index].type=="DATE" && form[index].showable != false}}' class="weui-cell weui-cell_select {{form[index].name.length > 14 ? 'cell-wrap':''}}">
+          <view class="weui-cell__hd weui-cell__hd_in-select-after">
+            <view class="weui-label {{form[index].name.length > 14 ? 'label-wrap':''}}">{{form[index].name}}</view>
+          </view>
+          <view class="weui-cell__bd">
+            <picker mode="multiSelector" value="{{form[index].value}}" disabled="false">
+              <view class="weui-cell" style="color: #b2b2b2; {{form[index].name.length > 14 ? 'padding-left:15px;':''}}">{{form[index].value}}</view>
+            </picker>
+          </view>
+        </view>
+        <!-- 子表单 -->
+        <navigator wx:elif='{{form[index].type=="FORM" && form[index].showable != false}}' class="weui-cell weui-cell_access" hover-class='weui-cell_active' data-index="{{index}}" url="../historydetails/historydetails?processId={{processId}}&processName={{processName}}&processInstanceId={{processInstanceId}}&processInstanceName={{processInstanceName}}&taskId={{taskId}}&taskName={{taskName}}&formId={{form[index].value}}&formName={{form[index].name}}&isChild=true">
+          <view class="weui-cell__bd">{{form[index].name}}</view>
+            <view class="weui-cell__ft weui-cell__ft_in-access">
+          </view>
+        </navigator>
+      </block>
+    </view>
+  </view>
+  <!-- 页面加载失败提示 -->
+  <view wx:else class="weui-msg">
+    <view class="weui-msg__icon-area">
+      <icon type="warn" size="45"></icon>
+    </view>
+    <view class="weui-msg__text-area">
+      <view class="weui-msg__title">{{messageTitle}}</view>
+      <view class="weui-msg__desc">{{messageDetails}}</view>
+    </view>
+    <view wx:if="{{username != null && username.length != 0}}" class="weui-msg__opr-area">
+      <view class="weui-btn-area">
+        <button class="weui-btn" type="primary" bindtap="requestGetFormDetails">刷新页面</button>
+        <button class="weui-btn" type="default" bindtap="backToLastPage">返回</button>
+      </view>
+    </view>
+    <view wx:if="{{username == null || username.length == 0}}" class="weui-msg__extra-area">
+      <view class="weui-footer">
+        <view class="weui-footer__text">将自动跳转回登录页面</view>
+      </view>
+    </view>
+  </view>
+</block>

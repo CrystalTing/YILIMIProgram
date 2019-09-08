@@ -1,0 +1,44 @@
+<!--pages/index/index.wxml-->
+<form bindsubmit='login'>
+  <view class="weui-cells__title" style="color:{{illegalError[0] ? 'red' : '#999'}};">账号</view>
+
+  <view class="weui-cells weui-cells_after-title">
+    <view class="weui-cell weui-cell_input">
+      <view class="weui-cell__bd">
+        <input class="weui-input" name="username" id="0" placeholder="请输入账号" bindinput="cancelIllegalError" bindfocus="onputaccount"  value="{{inputText}}" />
+      </view>
+      <view wx:if="{{illegalError[0]}}" class="weui-cell__ft">
+        <icon type="warn" size="23" color="#E64340"></icon>
+      </view>
+    </view>
+  </view>
+
+  <!-- 下拉框 -->
+  <view class="kind-list__item-bd {{inputaccount ? 'kind-list__item-bd_show' : ''}}">
+    <view class="weui-cells weui-cells_after-title {{inputaccount ? 'weui-cells_show' : ''}}">
+      <view wx:for="{{userInfoList}}" wx:key="*this" bindtap="selectClick" data-set="{{item}}">
+        <view class="weui-cell__bd selectitem">{{item.username}}</view>
+      </view>
+    </view>
+  </view>
+
+  <view class="weui-cells__title" style="color:{{illegalError[1] ? 'red' : '#999'}};">密码</view>
+  <view class="weui-cells weui-cells_after-title">
+    <view class="weui-cell weui-cell_input">
+      <view class="weui-cell__bd">
+        <input class="weui-input" name="password" id="1" placeholder="请输入密码" password="true" bindinput="cancelIllegalError" />
+      </view>
+      <view wx:if="{{illegalError[1]}}" class="weui-cell__ft">
+        <icon type="warn" size="23" color="#E64340"></icon>
+      </view>
+    </view>
+  </view>
+
+    <!-- <button class='regist-button' style='width: 60px;background-color:white;' hover-class='registBtn-hover' open-type='getUserInfo' bindgetuserinfo='getWechatInfo'>微信登录</button> -->
+    <view class="text-button">
+      <!-- <navigator class='regist-button' hover-class='registBtn-hover'>忘记密码</navigator> -->
+      <navigator class='regist-button' hover-class='registBtn-hover' url='../regist/regist'>注册账号</navigator>
+    </view>
+    <button class='login-button' form-type='submit' type='default' disabled="{{hasSubmitted}}">登录</button>
+    <button class='login-button' type='primary' open-type="getUserInfo" bindgetuserinfo="wechatLogin" disabled="{{hasSubmitted}}">微信登录</button>
+</form>
